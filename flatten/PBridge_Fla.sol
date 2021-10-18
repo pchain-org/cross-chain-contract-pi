@@ -218,9 +218,6 @@ library Address {
 
 
 
-            
-////// SPDX-License-Identifier-FLATTEN-SUPPRESS-WARNING: MIT
-
 pragma solidity >=0.6.0 <0.8.0;
 
 /**
@@ -383,9 +380,6 @@ library SafeMath {
 
 
 
-            
-////// SPDX-License-Identifier-FLATTEN-SUPPRESS-WARNING: MIT
-
 pragma solidity >=0.6.0 <0.8.0;
 
 /**
@@ -466,7 +460,6 @@ interface IERC20 {
 
 
 
-////// SPDX-License-Identifier-FLATTEN-SUPPRESS-WARNING: Unlicense
 /*
  * @title Solidity Bytes Arrays Utils
  * @author Gonçalo Sá <goncalo.sa@consensys.net>
@@ -988,9 +981,6 @@ library BytesLib {
 
 
 
-            
-////// SPDX-License-Identifier-FLATTEN-SUPPRESS-WARNING: MIT
-
 pragma solidity >=0.6.0 <0.8.0;
 
 ////import "./IERC721Receiver.sol";
@@ -1016,9 +1006,6 @@ contract ERC721Holder is IERC721Receiver {
 
 
 
-
-            
-////// SPDX-License-Identifier-FLATTEN-SUPPRESS-WARNING: MIT
 
 pragma solidity >=0.6.2 <0.8.0;
 
@@ -1152,8 +1139,6 @@ interface IERC721 is IERC165 {
 
 
 
-////// SPDX-License-Identifier-FLATTEN-SUPPRESS-WARNING: MIT
-
 pragma solidity >=0.6.0 <0.8.0;
 
 ////import "./IERC20.sol";
@@ -1232,9 +1217,6 @@ library SafeERC20 {
 
 
 
-            
-////// SPDX-License-Identifier-FLATTEN-SUPPRESS-WARNING: MIT
-
 pragma solidity 0.6.12;
 
 interface IERC721Minter {
@@ -1247,7 +1229,10 @@ interface IERC721Minter {
 
 
 
-   
+/** 
+ *  SourceUnit: /Users/terry/go/src/github.com/pchain-org/cross-chain-contract-pi/contracts/PBridge.sol
+*/
+            
 ////// SPDX-License-Identifier-FLATTEN-SUPPRESS-WARNING: MIT
 
 pragma solidity 0.6.12;
@@ -1261,8 +1246,6 @@ interface IERC20Minter {
 }
 
 
-
-////// SPDX-License-Identifier-FLATTEN-SUPPRESS-WARNING: MIT
 
 pragma solidity 0.6.12;
 
@@ -1343,7 +1326,7 @@ contract PBridge is ERC721Holder {
         emit DepositFunds(msg.sender, msg.value);
     }
 
-    function createOrSignWithdraw(
+    function executeWithdrawTx(
         string memory txKey,
         address payable to,
         uint256 amount,
@@ -1354,7 +1337,7 @@ contract PBridge is ERC721Holder {
         require(bytes(txKey).length == 64, "Fixed length of txKey: 64");
         require(to != address(0), "Withdraw: transfer to the zero address");
         require(amount > 0, "Withdrawal amount must be greater than 0");
-        // Verify completed trx
+        // Verify completed tx
         require(completedTxs[txKey] == 0, "Transaction has been completed");
         // Verify transfer
         if (isERC20) {
@@ -1389,7 +1372,7 @@ contract PBridge is ERC721Holder {
         emit TxWithdrawCompleted(txKey);
     }
 
-    function createOrSignWithdrawERC721(
+    function executeWithdrawTxERC721(
         string memory txKey,
         address ERC721,
         address to,
@@ -1417,7 +1400,7 @@ contract PBridge is ERC721Holder {
         emit TxWithdrawCompleted(txKey);
     }
 
-    function createOrSignManagerChange(
+    function executeManagerChange(
         string memory txKey,
         address[] memory adds,
         address[] memory removes,
@@ -1450,7 +1433,7 @@ contract PBridge is ERC721Holder {
         emit TxManagerChangeCompleted(txKey);
     }
 
-    function createOrSignUpgrade(
+    function executeUpgrade(
         string memory txKey,
         address upgradeContract,
         bytes memory signatures

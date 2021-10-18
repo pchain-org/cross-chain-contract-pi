@@ -79,7 +79,7 @@ contract PBridge is ERC721Holder {
         emit DepositFunds(msg.sender, msg.value);
     }
 
-    function createOrSignWithdraw(
+    function executeWithdrawTx(
         string memory txKey,
         address payable to,
         uint256 amount,
@@ -90,7 +90,7 @@ contract PBridge is ERC721Holder {
         require(bytes(txKey).length == 64, "Fixed length of txKey: 64");
         require(to != address(0), "Withdraw: transfer to the zero address");
         require(amount > 0, "Withdrawal amount must be greater than 0");
-        // Verify completed trx
+        // Verify completed tx
         require(completedTxs[txKey] == 0, "Transaction has been completed");
         // Verify transfer
         if (isERC20) {
@@ -125,7 +125,7 @@ contract PBridge is ERC721Holder {
         emit TxWithdrawCompleted(txKey);
     }
 
-    function createOrSignWithdrawERC721(
+    function executeWithdrawTxERC721(
         string memory txKey,
         address ERC721,
         address to,
@@ -153,7 +153,7 @@ contract PBridge is ERC721Holder {
         emit TxWithdrawCompleted(txKey);
     }
 
-    function createOrSignManagerChange(
+    function executeManagerChange(
         string memory txKey,
         address[] memory adds,
         address[] memory removes,
@@ -186,7 +186,7 @@ contract PBridge is ERC721Holder {
         emit TxManagerChangeCompleted(txKey);
     }
 
-    function createOrSignUpgrade(
+    function executeUpgrade(
         string memory txKey,
         address upgradeContract,
         bytes memory signatures
